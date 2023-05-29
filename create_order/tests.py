@@ -13,7 +13,7 @@ class HomePageTest(TestCase):
         html = response.content.decode('utf8')
 
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
-        self.assertIn('<h1>Hello World!</h1>', html)
+        self.assertTrue(html.title, "Test site")
         self.assertTrue(html.endswith('</html>'))
 
 

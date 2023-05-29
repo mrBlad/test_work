@@ -14,7 +14,7 @@ class ProfileModelTest(TestCase):
             user=User.objects.create_user(username="test1", password="123456"),
             full_name='Any Name',
             birthday=date.today(),
-            files=''
+            confirm_file=''
         )
 
         profile.save()
