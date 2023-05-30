@@ -3,22 +3,37 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from django.contrib.auth.models import User
 from datetime import date
-from users.models import Profile
+from users.models import User
 
 
 class ProfileModelTest(TestCase):
 
     def test_profile_model_create(self):
 
-        profile = Profile.objects.create(
-            user=User.objects.create_user(username="test1", password="123456"),
-            full_name='Any Name',
+        user1 = User.objects.create(
+            username='test1',
+            password='12345678',
+            last_name='Any',
+            first_name='Name1',
             birthday=date.today(),
-            confirm_file=''
+            confirm_file='/any/path1/'
         )
 
-        profile.save()
+        user2 = User.objects.create(
+            username='test2',
+            password='12345678',
+            last_name='Any',
+            first_name='Name2',
+            birthday=date.today(),
+            confirm_file='/any/path2/'
+        )
 
-        all_profile = Profile.objects.all()
+        user1.save()
 
-        self.assertEqual(all_profile[0], profile)
+        user2.save()
+
+        all_profile = User.objects.all()
+
+        self.assertEqual(all_profile[0], user1)
+
+        self.assertEqual(all_profile[1], user2)
