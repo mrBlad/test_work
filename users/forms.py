@@ -28,6 +28,9 @@ class DateForm(forms.DateInput):
 		super(DateForm, self).__init__(**kwargs)
 
 
+# need create new file form
+
+
 class UpdateUserForm(forms.ModelForm):
 	first_name = forms.CharField(
 		max_length=30,

@@ -6,7 +6,7 @@
     <h1>Profile</h1>
     <hr>
 
-    <form action=" {% url 'profile' %} " method="post">
+    <form action=" {% url 'profile' %} " method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_form.first_name|as_crispy_field }}
         {{ profile_form.last_name|as_crispy_field }}
@@ -18,18 +18,14 @@
                 {{ profile_form.confirm_file.label }}
                 <span class="asteriskField">*</span>
             </label>
-            <div class="upload_file">
-
-                <label class="label">
-                    <i class="material-icons">attach_file</i>
-                    <span class="title">Добавить файл</span>
-                    {{ profile_form.confirm_file }}
-                </label>
-            </div>
+            <label class="drop-container">
+                <span class="drop-title">Переместите ваш файл сюда</span>
+                или
+                {{ profile_form.confirm_file }}
+            </label>
         </div>
 
-        <button type="submit" class="btn btn-success" >Submit</button>
-        <button type="reset" class="btn">Reset</button>
+        <button type="submit" class="btn btn-success">Сохранить</button>
     </form>
 
     {% if profile_form.errors %}

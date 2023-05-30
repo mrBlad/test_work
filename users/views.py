@@ -87,11 +87,17 @@ class Profile(View):
         user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
 
         if user_form.is_valid():
-            update = user_form.save(commit=False)
-            update.user = request.user
-            update.save()
+            user = request.user
+            user.first_name = user_form.cleaned_data['first_name']
+            user.last_name = user_form.cleaned_data['last_name']
+            if user_form.cleaned_data['middle_name']:
+                user.middle_name = user_form.cleaned_data['middle_name']
+            user.birthday = user_form.cleaned_data['birthday']
+            user.email = user_form.cleaned_data['email']
+            user.confirm_file = user_form.cleaned_data['confirm_file']
+            user.save()
 
-            return redirect('home')
+            return redirect('profile')
 
         context = {
             'profile_form': UpdateUserForm(instance=request.user)
