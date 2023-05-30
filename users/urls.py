@@ -1,8 +1,9 @@
-from django.conf.urls import url, include
-from views import Register
+from django.conf.urls import url
+from views import Register, Login, logout_request
 
 
 urlpatterns = [
-    url('', include('django.contrib.auth.urls')),
     url('register/', Register.as_view(), name='register'),
+    url('login/', Login.as_view(), name='login'),
+    url('logout/', logout_request, name='logout'),
 ]

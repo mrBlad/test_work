@@ -10,5 +10,5 @@ def _user_directory_path(instance, filename):
 
 
 class User(AbstractUser):
-    birthday = models.DateField(blank=True)
+    birthday = models.DateField(null=True, blank=True)
     confirm_file = models.FileField(blank=True, upload_to=_user_directory_path)

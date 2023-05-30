@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
     <h1>Registration</h1>
     <hr>
 
     <form action=" {% url 'register' %} " method="post">
-        {% register_form|crispy %}
         {% csrf_token %}
-        <input type="submit" class="btn btn-success" value="submit">
+        {{ register_form|crispy }}
+        <button type="submit" class="btn btn-success" >Submit</button>
     </form>
 
     {% if register_form.errors %}
         <p> {{ register_form.errors.error }} </p>
     {% endif %}
-{% endblock %}
+{% endblock content %}

@@ -5,8 +5,6 @@ from models import User
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
-	password1 = forms.CharField(widget=forms.PasswordInput())
-	password2 = forms.CharField(widget=forms.PasswordInput())
 
 	class Meta:
 		model = User
