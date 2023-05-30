@@ -5,3 +5,45 @@
 .list-group {
     padding-bottom: 40px;
 }
+
+.upload_file {
+    padding-top:1em;
+    padding-bottom:1em;
+    padding-right:1em;
+    margin-top:1em;
+    margin-bottom:1em;
+    margin-right:1em;
+}
+
+.upload_file input[type=file] {
+    outline:0;
+    opacity:0;
+    pointer-events:none;
+    user-select:none;
+}
+
+.upload_file .label {
+    width:120px;
+    border:2px dashed grey;
+    border-radius:5px;
+    display:block;
+    padding:1.2em;
+    transition:border 300ms ease;
+    cursor:pointer;
+    text-align:center
+}
+ .upload_file .label i{
+    display:block;
+    font-size:42px;
+    padding-bottom:16px
+}
+ .upload_file .label i,.upload_file .label .title{
+    color:grey;
+    transition:200ms color
+}
+ .upload_file .label:hover{
+    border:2px solid #000
+}
+ .upload_file .label:hover i,.upload_file .label:hover .title{
+    color:#000
+}

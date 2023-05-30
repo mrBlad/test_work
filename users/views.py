@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from forms import NewUserForm
+from forms import NewUserForm, UpdateUserForm
 
 
 class Register(View):
@@ -68,7 +68,33 @@ def logout_request(request):
     return redirect('home')
 
 
-def profile_page(request):
+class Profile(View):
     template_name = 'profile.html'
 
-    return render(request, template_name)
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return redirect('login')
+
+        context = {
+            'profile_form': UpdateUserForm(instance=request.user)
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        if not request.user.is_authenticated():
+            return redirect('login')
+
+        user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
+
+        if user_form.is_valid():
+            update = user_form.save(commit=False)
+            update.user = request.user
+            update.save()
+
+            return redirect('home')
+
+        context = {
+            'profile_form': UpdateUserForm(instance=request.user)
+        }
+
+        return render(request, self.template_name, context)
