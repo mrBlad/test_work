@@ -66,3 +66,9 @@ class Login(View):
 def logout_request(request):
     logout(request)
     return redirect('home')
+
+
+def profile_page(request):
+    template_name = 'profile.html'
+
+    return render(request, template_name)
