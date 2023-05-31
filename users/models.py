@@ -7,7 +7,7 @@ from uuid import uuid4
 
 # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
 def _user_directory_path(instance, filename):
-    return '{0}_{1}/{2}'.format(instance.username, instance.id, filename)
+    return '{0}/{1}'.format(instance.id, filename)
 
 
 class User(AbstractUser):

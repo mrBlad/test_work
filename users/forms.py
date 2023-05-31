@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from models import User
+from django.utils.translation import ugettext_lazy
 from django.contrib.admin.widgets import AdminDateWidget
 
 
@@ -28,7 +29,21 @@ class DateForm(forms.DateInput):
 		super(DateForm, self).__init__(**kwargs)
 
 
-# need create new file form
+FILE_INPUT_CONTRADICTION = object()
+
+
+class FileForm(forms.ClearableFileInput):
+	template_name = 'widget/FileForm.html'
+	initial_text = ugettext_lazy('Upload file:')
+
+	def get_context(self, name, value, attrs):
+		context = super(FileForm, self).get_context(name, value, attrs)
+		context['widget'].update({
+			'get_value': str(value).split('/')[-1],
+			'is_initial': self.is_initial(value),
+			'initial_text': self.initial_text,
+		})
+		return context
 
 
 class UpdateUserForm(forms.ModelForm):
@@ -63,7 +78,7 @@ class UpdateUserForm(forms.ModelForm):
 	confirm_file = forms.FileField(
 		required=True,
 		label='Файл подтверждения',
-		widget=forms.FileInput()
+		widget=FileForm()
 	)
 
 	class Meta:
