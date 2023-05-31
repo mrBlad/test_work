@@ -1,8 +1,34 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
     <h1>Profile</h1>
     <hr>
 
-{% endblock content %}
+    <form action=" {% url 'profile' %} " method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_form.first_name|as_crispy_field }}
+        {{ profile_form.last_name|as_crispy_field }}
+        {{ profile_form.middle_name|as_crispy_field }}
+        {{ profile_form.email|as_crispy_field }}
+        {{ profile_form.birthday|as_crispy_field }}
+        <div class="form-group">
+            <label class="control-label requiredField">
+                {{ profile_form.confirm_file.label }}
+                <span class="asteriskField">*</span>
+            </label>
+            <label class="drop-container">
+                <span class="drop-title">Переместите ваш файл сюда</span>
+                или
+                {{ profile_form.confirm_file }}
+            </label>
+        </div>
 
+        <button type="submit" class="btn btn-success">Сохранить</button>
+    </form>
+
+    {% if profile_form.errors %}
+        <p> {{ profile_form.errors.error }} </p>
+    {% endif %}
+{% endblock content %}
