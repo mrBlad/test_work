@@ -80,7 +80,12 @@ class UpdateUserForm(forms.ModelForm):
 		label='Файл подтверждения',
 		widget=FileForm()
 	)
+	remove_file = forms.BooleanField(
+		required=False,
+		label='Удалить',
+		widget=forms.CheckboxInput()
+	)
 
 	class Meta:
 		model = User
-		fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'email', 'confirm_file']
+		fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'email', 'confirm_file', 'remove_file']

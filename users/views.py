@@ -94,7 +94,10 @@ class Profile(View):
                 user.middle_name = user_form.cleaned_data['middle_name']
             user.birthday = user_form.cleaned_data['birthday']
             user.email = user_form.cleaned_data['email']
-            user.confirm_file = user_form.cleaned_data['confirm_file']
+            if user_form.cleaned_data['remove_file']:
+                user.confirm_file = ''
+            else:
+                user.confirm_file = user_form.cleaned_data['confirm_file']
             user.save()
 
             return redirect('profile')
