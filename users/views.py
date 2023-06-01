@@ -5,7 +5,6 @@ from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from forms import NewUserForm, UpdateUserForm
-from models import File
 
 
 class Register(View):
@@ -87,7 +86,6 @@ class Profile(View):
 
         user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
 
-        print(user_form.is_valid())
         if user_form.is_valid():
             user = request.user
             user.first_name = user_form.cleaned_data['first_name']
@@ -96,11 +94,10 @@ class Profile(View):
                 user.middle_name = user_form.cleaned_data['middle_name']
             user.birthday = user_form.cleaned_data['birthday']
             user.email = user_form.cleaned_data['email']
-            user_file = File.objects.create(confirm_file=user_form.cleaned_data['confirm_file'], user=user)
             if user_form.cleaned_data['remove_file']:
-                user.file = ''
+                user.confirm_file = ''
             else:
-                user.file = user_file
+                user.confirm_file = user_form.cleaned_data['confirm_file']
             user.save()
 
             return redirect('profile')

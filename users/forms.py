@@ -1,8 +1,9 @@
 # coding=utf-8
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy
+from django.contrib.admin.widgets import AdminDateWidget
 
 
 class NewUserForm(UserCreationForm):
