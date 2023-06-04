@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>User orders</h1>
+    <hr>
+
+    {% if order_list %}
+        {% for item in order_list %}
+            Username: {{item.user_full_name}}
+            <br>
+            Comment: {{item.user_comment}}
+            <br>
+            Birthday: {{item.user_birthday}}
+            <br>
+            Status: {{item.status}}
+            <br>
+            File: {{item.confirm_file}}
+            <br>
+            <br>
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}

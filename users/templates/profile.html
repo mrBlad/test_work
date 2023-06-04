@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
     <h1>Profile</h1>
     <hr>
+
+    <script src=" {% static 'js/fileinput.js' %} "></script>
 
     <form action=" {% url 'profile' %} " method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -14,15 +17,15 @@
         {{ profile_form.email|as_crispy_field }}
         {{ profile_form.birthday|as_crispy_field }}
         <div class="form-group">
-            <label class="control-label requiredField">
-                {{ profile_form.confirm_file.label }}
-                <span class="asteriskField">*</span>
+            <label class="control-label  requiredField">
+                Файл подтверждения<span class="asteriskField">*</span>
             </label>
-            <label class="drop-container">
-                <span class="drop-title">Переместите ваш файл сюда</span>
-                или
-                <span>{{ profile_form.confirm_file }} Remove file: {{profile_form.remove_file}}</span>
-            </label>
+            <div class="file-uploader input-group">
+                {{ profile_form.path_to_file }}
+                <span class="input-group-btn">
+                    {{ profile_form.confirm_file }}
+                </span>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-success">Сохранить</button>

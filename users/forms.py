@@ -28,23 +28,6 @@ class DateForm(forms.DateInput):
 		super(DateForm, self).__init__(**kwargs)
 
 
-FILE_INPUT_CONTRADICTION = object()
-
-
-class FileForm(forms.ClearableFileInput):
-	template_name = 'widget/FileForm.html'
-	initial_text = ugettext_lazy('Upload file:')
-
-	def get_context(self, name, value, attrs):
-		context = super(FileForm, self).get_context(name, value, attrs)
-		context['widget'].update({
-			'get_value': str(value).split('/')[-1],
-			'is_initial': self.is_initial(value),
-			'initial_text': self.initial_text,
-		})
-		return context
-
-
 class UpdateUserForm(forms.ModelForm):
 	first_name = forms.CharField(
 		max_length=30,
@@ -74,17 +57,26 @@ class UpdateUserForm(forms.ModelForm):
 		label='Почта',
 		widget=forms.TextInput()
 	)
+	path_to_file = forms.CharField(
+		label='Путь до файла',
+		disabled=True,
+		widget=forms.TextInput(
+			attrs={
+				'id': 'filename',
+				'class': 'filename form-control',
+			}
+		)
+	)
 	confirm_file = forms.FileField(
 		required=True,
-		label='Файл подтверждения',
-		widget=FileForm()
-	)
-	remove_file = forms.BooleanField(
-		required=False,
-		label='Удалить',
-		widget=forms.CheckboxInput()
+		label='Выбор файла',
+		widget=forms.FileInput(
+			attrs={
+				'class': 'custom-file-input'
+			}
+		)
 	)
 
 	class Meta:
 		model = User
-		fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'email', 'confirm_file', 'remove_file']
+		fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'email', 'path_to_file', 'confirm_file']
