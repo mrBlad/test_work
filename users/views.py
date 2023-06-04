@@ -75,8 +75,14 @@ class Profile(View):
         if not request.user.is_authenticated():
             return redirect('login')
 
+        user = request.user
+
+        path_to_file = str(user.confirm_file).split('/')[-1]
+
+        initial = {'path_to_file': path_to_file}
+
         context = {
-            'profile_form': UpdateUserForm(instance=request.user)
+            'profile_form': UpdateUserForm(instance=request.user, initial=initial)
         }
         return render(request, self.template_name, context)
 
@@ -94,10 +100,7 @@ class Profile(View):
                 user.middle_name = user_form.cleaned_data['middle_name']
             user.birthday = user_form.cleaned_data['birthday']
             user.email = user_form.cleaned_data['email']
-            if user_form.cleaned_data['remove_file']:
-                user.confirm_file = ''
-            else:
-                user.confirm_file = user_form.cleaned_data['confirm_file']
+            user.confirm_file = user_form.cleaned_data['confirm_file']
             user.save()
 
             return redirect('profile')

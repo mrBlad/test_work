@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+    <h1>Create order</h1>
+    <hr>
+
+    <div class="row">
+        <form action=" {% url 'add-order' %} " method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ order_form.full_name|as_crispy_field }}
+            {{ order_form.birthday|as_crispy_field }}
+            {{ order_form.confirm_file|as_crispy_field }}
+            {{ order_form.comment|as_crispy_field }}
+
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </div>
+
+    {% if order_form.errors %}
+        <p> {{ order_form.errors.error }} </p>
+    {% endif %}
+
+{% endblock content %}

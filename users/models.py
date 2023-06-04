@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
 
 
-# file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
+# file will be uploaded to MEDIA_ROOT/<id>/<filename>
 def _user_directory_path(instance, filename):
     return '{0}/{1}'.format(instance.id, filename)
 
