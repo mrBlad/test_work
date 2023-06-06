@@ -59,6 +59,7 @@ class UpdateUserForm(forms.ModelForm):
 	)
 	path_to_file = forms.CharField(
 		label='Путь до файла',
+		required=False,
 		disabled=True,
 		widget=forms.TextInput(
 			attrs={

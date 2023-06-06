@@ -9,6 +9,8 @@
 
     <script src=" {% static 'js/fileinput.js' %} "></script>
 
+
+
     <form action=" {% url 'profile' %} " method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_form.first_name|as_crispy_field }}
@@ -31,7 +33,9 @@
         <button type="submit" class="btn btn-success">Сохранить</button>
     </form>
 
+
     {% if profile_form.errors %}
-        <p> {{ profile_form.errors.error }} </p>
+        <p> {{ profile_form.errors }} </p>
     {% endif %}
+
 {% endblock content %}

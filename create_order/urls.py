@@ -1,10 +1,9 @@
 from django.conf.urls import url
-from views import home_page, CreateOrderView, orders_page
+from views import CreateOrderView, orders_page, order_page
 
 
 urlpatterns = [
-
-    url('create/', CreateOrderView.as_view(), name='add-order'),
+    url(r'history/(?P<pk>[0-9]+)/', order_page, name='user-order'),
     url('history/', orders_page, name='user-orders'),
-    url('', home_page, name='home'),
+    url('create/', CreateOrderView.as_view(), name='add-order'),
 ]

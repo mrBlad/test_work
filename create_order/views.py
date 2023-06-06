@@ -11,6 +11,9 @@ def home_page(request):
 
 
 def orders_page(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
     user = request.user
     order_list = Order.objects.filter(user_id=user)
 
@@ -21,12 +24,40 @@ def orders_page(request):
     return render(request, "orders_page.html", context=context)
 
 
+def order_page(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    user = request.user
+    order = Order.objects.filter(user_id=user, id=pk)
+
+    for index, value in enumerate(order):
+        order[index].status = get_choices_label(value.status)
+
+    labels = {
+        'id': 'Номер заказа',
+        'user_full_name': 'Имя',
+        'user_birthday': 'Дата рождения',
+        'user_comment': 'Комментарий',
+        'date_create': 'Дата формирования заказа',
+        'date_finish': 'Дата готовности заказа',
+        'status': 'Статус заказа'
+    }
+
+    context = {'order': order, 'labels': labels}
+
+    return render(request, "order_info.html", context=context)
+
+
 class CreateOrderView(View):
     template_name = 'order_page.html'
 
     def get(self, request):
         if not request.user.is_authenticated():
             return redirect('login')
+
+        if not request.user.last_name:
+            return redirect('profile')
 
         user = request.user
 
@@ -45,6 +76,9 @@ class CreateOrderView(View):
         if not request.user.is_authenticated():
             return redirect('login')
 
+        if not request.user.last_name:
+            return redirect('profile')
+
         user = request.user
         order_form = OrderForm(request.POST, instance=request.user)
 
@@ -56,7 +90,6 @@ class CreateOrderView(View):
             order.user_birthday = order_form.cleaned_data['birthday']
             order.user_comment = order_form.cleaned_data['comment']
             order.confirm_file = order_form.cleaned_data['confirm_file']
-            print(order.confirm_file)
             order.save()
 
             return redirect('home')

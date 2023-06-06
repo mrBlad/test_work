@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Order</h1>
+    <hr>
+
+    {% if order %}
+        <form class="form-horizontal">
+            {% for item in order %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.id}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.id}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.user_full_name}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.user_full_name}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.user_birthday}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.user_birthday}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.user_comment}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.user_comment}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.status}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.status}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{labels.date_create}}</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{item.date_create}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    {% endif %}
+
+
+
+{% endblock content %}

@@ -77,6 +77,8 @@ class Profile(View):
 
         user = request.user
 
+        print(user.confirm_file)
+
         path_to_file = str(user.confirm_file).split('/')[-1]
 
         initial = {'path_to_file': path_to_file}
@@ -92,6 +94,9 @@ class Profile(View):
 
         user_form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
 
+        if user_form.errors:
+            print(user_form.errors)
+
         if user_form.is_valid():
             user = request.user
             user.first_name = user_form.cleaned_data['first_name']
@@ -103,7 +108,7 @@ class Profile(View):
             user.confirm_file = user_form.cleaned_data['confirm_file']
             user.save()
 
-            return redirect('profile')
+            return redirect('home')
 
         context = {
             'profile_form': UpdateUserForm(instance=request.user)

@@ -9,9 +9,9 @@ REJECTED = 'rj'
 COMPLETE = 'cp'
 
 ORDER_STATUS = [
-    (PENDING, 'pending'),
-    (REJECTED, 'rejected'),
-    (COMPLETE, 'complete'),
+    (PENDING, 'в ожиданнии'),
+    (REJECTED, 'отклонен'),
+    (COMPLETE, 'завершен'),
 ]
 
 
