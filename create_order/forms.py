@@ -1,6 +1,7 @@
 # coding=utf-8
 from django import forms
 from models import Order
+from models import ORDER_STATUS
 
 
 class DateForm(forms.DateInput):
@@ -11,7 +12,7 @@ class DateForm(forms.DateInput):
 		super(DateForm, self).__init__(**kwargs)
 
 
-class OrderForm(forms.ModelForm):
+class CreateOrderForm(forms.ModelForm):
 	full_name = forms.CharField(
 		max_length=30,
 		label='Имя',
@@ -39,3 +40,14 @@ class OrderForm(forms.ModelForm):
 	class Meta:
 		model = Order
 		fields = ("full_name", "birthday", "comment", "confirm_file")
+
+
+class ChangingOrderForm(forms.ModelForm):
+	status = forms.ChoiceField(
+		label='Статус',
+		choices=ORDER_STATUS
+	)
+
+	class Meta:
+		model = Order
+		fields = ("status",)

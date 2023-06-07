@@ -1,24 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Home page</h1>
+    <h1>Главная страница</h1>
     <hr>
 
     <div class="row">
-        <div class="col-xs-6 col-md-3">
-            <p align="center">
-                <a href=" {% url 'add-order' %} " class="thumbnail">
-                    Заказ документа
-                </a>
-            </p>
-        </div>
-        <div class="col-xs-6 col-md-3">
-            <p align="center">
-                <a href=" {% url 'user-orders' %} " class="thumbnail">
-                    Просмотр заказов
-                </a>
-            </p>
-        </div>
+        {% if objects %}
+            {% for item in objects %}
+                <div class="col-xs-6 col-md-3">
+                    <p align="center">
+                        <a href=" {% url item.urls %} " class="thumbnail">
+                            {{item.name}}
+                        </a>
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
 {% endblock content %}

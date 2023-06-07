@@ -4,8 +4,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
 
-client = 'clt'
-worker = 'wrk'
+client = 'client'
+worker = 'worker'
 
 USER_TYPE = [
     (client, 'клиент'),
@@ -23,7 +23,7 @@ class User(AbstractUser):
     birthday = models.DateField(null=True, blank=True)
     confirm_file = models.FileField(blank=True, null=True, upload_to=_user_directory_path)
     middle_name = models.CharField(blank=True, max_length=30, verbose_name='middle name')
-    user_type = models.CharField(max_length=4, choices=USER_TYPE, default=client)
+    user_type = models.CharField(max_length=7, choices=USER_TYPE, default=client)
 
     def __str__(self):
         return self.username
