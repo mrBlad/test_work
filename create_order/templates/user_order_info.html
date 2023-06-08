@@ -43,6 +43,14 @@
                         <p class="form-control-static">{{item.date_create}}</p>
                     </div>
                 </div>
+                {% if item.date_finish %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{labels.date_finish}}</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{item.date_finish}}</p>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{labels.confirm_file}}</label>
                     <div class="col-sm-10">
@@ -50,6 +58,7 @@
                     </div>
                 </div>
             {% endfor %}
+            <a class="btn btn-default" href=" {% url 'user-orders' %} ">Назад</a>
         </form>
     {% endif %}
 

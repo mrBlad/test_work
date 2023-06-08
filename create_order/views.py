@@ -8,6 +8,7 @@ from os import path
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.contrib import messages
+from datetime import datetime
 
 
 def download(request, path_to_file):
@@ -59,7 +60,30 @@ def stats_page(request):
         messages.info(request, 'Чтобы воспользоваться системой, необходимо авторизоваться!')
         return redirect('login')
 
-    return render(request, 'stats_page.html')
+    if request.user.user_type != 'worker':
+        return Http404
+
+    orders = Order.objects.all()
+
+    status = {
+        'pd': 0,
+        'rj': 0,
+        'cp': 0
+    }
+
+    for item in orders:
+        status.update({item.status: status[item.status]+1})
+
+    labels = {
+        'cp': 'Завершено',
+        'rj': 'Отклонено',
+        'pd': 'В ожидании',
+        'all': 'Всего заказов',
+    }
+
+    context = {'all_each_status': status, 'count_order': len(orders), 'labels': labels}
+
+    return render(request, 'stats_page.html', context)
 
 
 def list_orders_page(request):
@@ -138,6 +162,8 @@ class UserOrderPage(View):
         order_form = ChangingOrderForm(request.POST)
 
         if order_form.is_valid():
+            if order.status != order_form.cleaned_data["status"] and order_form.cleaned_data["status"] == 'cp':
+                order.date_finish = datetime.now()
             order.status = order_form.cleaned_data["status"]
             order.save()
 
